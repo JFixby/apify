@@ -3,4 +3,7 @@
 
 .actor/
 node_modules/
-storage/
+
+# Added by Apify CLI
+node_modules
+.venv

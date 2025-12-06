@@ -1,0 +1,53 @@
+{
+  "startUrls": [
+    {
+      "url": "https://www.crunchbase.com/person/marc-andreessen"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/reid-hoffman"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/peter-thiel"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/naval-ravikant"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/jason-calacanis"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/chris-sacca"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/ben-horowitz"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/fred-wilson"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/david-sacks"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/keith-rabois"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/garry-tan"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/paul-graham"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/sam-altman"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/ron-conway"
+    },
+    {
+      "url": "https://www.crunchbase.com/person/elad-gil"
+    }
+  ],
+  "scrapingMode": "auto",
+  "discoverInvestors": true,
+  "extractMAData": true,
+  "maxRequestsPerCrawl": 20
+}
