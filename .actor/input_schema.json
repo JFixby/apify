@@ -6,7 +6,7 @@
         "startUrls": {
             "title": "Start URLs",
             "type": "array",
-            "description": "Crunchbase URLs only. Use company/organization URLs (https://www.crunchbase.com/organization/company-name) or investor/person URLs (https://www.crunchbase.com/person/investor-name). Non-Crunchbase URLs will be skipped.",
+            "description": "Crunchbase investor/person URLs (https://www.crunchbase.com/person/investor-name). The Actor will extract LinkedIn profile URLs from Crunchbase pages and scrape those LinkedIn profiles. Non-Crunchbase/LinkedIn URLs will be skipped.",
             "editor": "requestListSources",
             "prefill": [
                 {
@@ -17,8 +17,8 @@
         "scrapingMode": {
             "title": "Scraping Mode",
             "type": "string",
-            "description": "Select the type of data to extract. 'auto' detects automatically, 'crunchbase' for company data, 'investor' for investor profiles, 'business-listing' for M&A listings, 'general' for basic page data.",
-            "enum": ["auto", "crunchbase", "investor", "business-listing", "general"],
+            "description": "Select the type of data to extract. 'auto' detects automatically, 'investor' for investor profiles from Crunchbase.",
+            "enum": ["auto", "investor"],
             "default": "auto"
         },
         "extractMAData": {
