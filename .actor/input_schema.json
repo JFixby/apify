@@ -3,35 +3,15 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "startUrls": {
-            "title": "Start URLs",
+        "profileUrls": {
+            "title": "LinkedIn Profile URLs",
             "type": "array",
-            "description": "Crunchbase investor/person URLs (https://www.crunchbase.com/person/investor-name). The Actor will extract LinkedIn profile URLs from Crunchbase pages and scrape those LinkedIn profiles. Non-Crunchbase/LinkedIn URLs will be skipped.",
-            "editor": "requestListSources",
+            "description": "Array of LinkedIn profile URLs to scrape (e.g., https://www.linkedin.com/in/username)",
+            "editor": "stringList",
             "prefill": [
-                {
-                    "url": "https://www.crunchbase.com/person/marc-andreessen"
-                }
+                "https://www.linkedin.com/in/williamhgates",
+                "https://www.linkedin.com/in/jeannie-wyrick-b4760710a"
             ]
-        },
-        "scrapingMode": {
-            "title": "Scraping Mode",
-            "type": "string",
-            "description": "Select the type of data to extract. 'auto' detects automatically, 'investor' for investor profiles from Crunchbase.",
-            "enum": ["auto", "investor"],
-            "default": "auto"
-        },
-        "extractMAData": {
-            "title": "Extract M&A Data",
-            "type": "boolean",
-            "description": "Enable enhanced M&A-specific data extraction (revenue, valuation, deal readiness, business type). Useful for AnyBiz workflow.",
-            "default": true
-        },
-        "discoverInvestors": {
-            "title": "Discover Investors",
-            "type": "boolean",
-            "description": "When enabled, crawls Crunchbase search results and listing pages to discover investor profiles automatically. Works with Crunchbase URLs that contain search results or investor listings.",
-            "default": false
         },
         "maxRequestsPerCrawl": {
             "title": "Max Requests per Crawl",

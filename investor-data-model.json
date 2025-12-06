@@ -1,0 +1,1509 @@
+{
+  "investor_profile": {
+    "definition": "Represents a single investing entity (typically a VC fund or firm). Captures identity, preferences, constraints, team, activity, and a fit score vs. a specific startup.",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Globally unique identifier for this investor profile within your system.",
+        "example": "fund_001_sequoia_us"
+      },
+      "created_at": {
+        "type": "string (ISO 8601 datetime)",
+        "description": "Timestamp when this investor profile record was first created.",
+        "example": "2025-12-06T12:00:00Z"
+      },
+      "updated_at": {
+        "type": "string (ISO 8601 datetime)",
+        "description": "Timestamp when this investor profile record was last updated.",
+        "example": "2025-12-10T09:30:00Z"
+      },
+      "version": {
+        "type": "string",
+        "description": "Semantic version or internal schema version of this profile data.",
+        "example": "1.0.0"
+      },
+
+      "fund_identity": {
+        "definition": "Core identity of the investing firm/fund and high-level positioning.",
+        "fields": {
+          "name": {
+            "type": "string",
+            "description": "Official public name of the fund or firm.",
+            "example": "Sequoia Capital"
+          },
+          "alternative_names": {
+            "type": "array<string>",
+            "description": "List of alternate spellings, abbreviations, or brand names used for the same fund.",
+            "example": ["Sequoia", "Sequoia Capital US"]
+          },
+          "logo_url": {
+            "type": "string (URL)",
+            "description": "URL to a logo image suitable for display in UI.",
+            "example": "https://assets.example.com/logos/sequoia.png"
+          },
+          "fund_type": {
+            "type": "string (enum)",
+            "description": "Category of investing entity.",
+            "enum": [
+              "venture_capital",
+              "corporate_venture_capital",
+              "private_equity",
+              "growth_equity",
+              "family_office",
+              "angel_syndicate",
+              "angel_investor",
+              "accelerator",
+              "incubator",
+              "search_fund",
+              "sovereign_wealth_fund",
+              "hedge_fund",
+              "fund_of_funds",
+              "other"
+            ],
+            "example": "venture_capital"
+          },
+          "fund_structure": {
+            "type": "string (enum)",
+            "description": "Legal/economic structure of the fund vehicle or capital pool.",
+            "enum": [
+              "closed_end",
+              "evergreen",
+              "single_family_office",
+              "multi_family_office",
+              "corporate_balance_sheet",
+              "spv",
+              "rolling_fund",
+              "other"
+            ],
+            "example": "closed_end"
+          },
+          "legal_entity_name": {
+            "type": "string",
+            "description": "Registered legal entity name associated with the fund.",
+            "example": "Sequoia Capital Operations, LLC"
+          },
+          "founded_year": {
+            "type": "number (integer)",
+            "description": "Year the firm was founded.",
+            "example": 1972
+          },
+          "aum_usd_estimate": {
+            "type": "number",
+            "description": "Estimated total assets under management in USD across all funds.",
+            "example": 15000000000
+          },
+          "fund_size_band": {
+            "type": "string (enum)",
+            "description": "Approximate size category of the specific fund this profile refers to.",
+            "enum": [
+              "nano",      // < $25M
+              "micro",     // $25M – $75M
+              "small",     // $75M – $200M
+              "mid",       // $200M – $500M
+              "large",     // $500M – $1B
+              "mega"       // > $1B
+            ],
+            "example": "large"
+          },
+          "fund_number": {
+            "type": "number (integer)",
+            "description": "Sequence number of the active fund if the firm has multiple (e.g., Fund I, Fund II).",
+            "example": 18
+          },
+          "fund_vintage_year": {
+            "type": "number (integer)",
+            "description": "Year the current fund started investing (vintage).",
+            "example": 2022
+          },
+          "status": {
+            "type": "string (enum)",
+            "description": "Current high-level status of the fund.",
+            "enum": [
+              "active",             // actively investing new capital
+              "paused",             // temporarily not doing new deals
+              "harvesting",         // mostly follow-ons / exits
+              "raising_new_fund",   // raising but still capable of deals
+              "inactive",           // no longer making investments
+              "unknown"
+            ],
+            "example": "active"
+          }
+        }
+      },
+
+      "geography_focus": {
+        "definition": "Where the investor is based and the geographies they prefer or avoid.",
+        "fields": {
+          "hq": {
+            "type": "object",
+            "description": "Headquarters city/region/country of the firm.",
+            "fields": {
+              "city": {
+                "type": "string",
+                "description": "HQ city name.",
+                "example": "Menlo Park"
+              },
+              "state_region": {
+                "type": "string",
+                "description": "HQ state or region name where applicable.",
+                "example": "California"
+              },
+              "country": {
+                "type": "string",
+                "description": "HQ country name.",
+                "example": "United States"
+              }
+            }
+          },
+          "offices": {
+            "type": "array<object>",
+            "description": "All physical offices where investment staff may be located.",
+            "item_fields": {
+              "city": {
+                "type": "string",
+                "description": "Office city.",
+                "example": "Menlo Park"
+              },
+              "state_region": {
+                "type": "string",
+                "description": "Office state or region.",
+                "example": "California"
+              },
+              "country": {
+                "type": "string",
+                "description": "Office country.",
+                "example": "United States"
+              },
+              "address_line_1": {
+                "type": "string",
+                "description": "First line of street address.",
+                "example": "2800 Sand Hill Rd"
+              },
+              "address_line_2": {
+                "type": "string",
+                "description": "Second line of address (suite, floor, etc.), may be empty.",
+                "example": "Suite 100"
+              },
+              "postal_code": {
+                "type": "string",
+                "description": "Postal or ZIP code.",
+                "example": "94025"
+              },
+              "latitude": {
+                "type": "number",
+                "description": "Latitude coordinate in decimal degrees.",
+                "example": 37.423
+              },
+              "longitude": {
+                "type": "number",
+                "description": "Longitude coordinate in decimal degrees.",
+                "example": -122.214
+              }
+            }
+          },
+          "primary_markets": {
+            "type": "array<string>",
+            "description": "Regions or countries where the fund most actively invests (core focus).",
+            "example": ["North America", "Europe"]
+          },
+          "secondary_markets": {
+            "type": "array<string>",
+            "description": "Regions where the fund invests opportunistically but not as a core focus.",
+            "example": ["India", "Southeast Asia"]
+          },
+          "excluded_markets": {
+            "type": "array<string>",
+            "description": "Regions or countries that the investor will not invest in for compliance or strategy reasons.",
+            "example": ["Russia", "Iran"]
+          },
+          "geo_stage_focus": {
+            "type": "object",
+            "description": "Indicates whether the investor is open to emerging vs developed markets.",
+            "fields": {
+              "emerging_markets": {
+                "type": "boolean",
+                "description": "True if investor actively considers emerging markets.",
+                "example": true
+              },
+              "developed_markets": {
+                "type": "boolean",
+                "description": "True if investor actively considers developed markets.",
+                "example": true
+              }
+            }
+          }
+        }
+      },
+
+      "investment_stage_focus": {
+        "definition": "Funding stages and how the investor behaves at each stage (check size, ownership, lead preference).",
+        "fields": {
+          "pre_seed": {
+            "type": "object",
+            "description": "Preferences for pre-seed investments.",
+            "fields": {
+              "active": {
+                "type": "boolean",
+                "description": "Whether the investor currently does pre-seed deals.",
+                "example": true
+              },
+              "typical_check_min_usd": {
+                "type": "number",
+                "description": "Minimum typical initial check in USD at pre-seed.",
+                "example": 250000
+              },
+              "typical_check_max_usd": {
+                "type": "number",
+                "description": "Maximum typical initial check in USD at pre-seed.",
+                "example": 1000000
+              },
+              "ownership_target_min_pct": {
+                "type": "number",
+                "description": "Minimum preferred ownership percentage at pre-seed.",
+                "example": 5
+              },
+              "ownership_target_max_pct": {
+                "type": "number",
+                "description": "Maximum preferred ownership percentage at pre-seed.",
+                "example": 12
+              },
+              "lead_preference": {
+                "type": "string (enum)",
+                "description": "How often the investor leads rounds at this stage.",
+                "enum": [
+                  "lead_only",
+                  "lead_or_co_lead",
+                  "co_lead_or_follow",
+                  "follow_only"
+                ],
+                "example": "co_lead_or_follow"
+              }
+            }
+          },
+          "seed": {
+            "type": "object",
+            "description": "Preferences for seed investments. Same fields as pre_seed.",
+            "fields": { /* same keys as pre_seed */ }
+          },
+          "series_a": {
+            "type": "object",
+            "description": "Preferences for Series A investments. Same fields as pre_seed.",
+            "fields": { /* same keys as pre_seed */ }
+          },
+          "series_b_plus": {
+            "type": "object",
+            "description": "Preferences for Series B and later growth rounds. Same fields as pre_seed.",
+            "fields": { /* same keys as pre_seed */ }
+          },
+          "growth_equity": {
+            "type": "object",
+            "description": "Whether the investor participates in growth equity deals separate from early-stage.",
+            "fields": {
+              "active": {
+                "type": "boolean",
+                "description": "True if the investor does growth equity / late-stage deals.",
+                "example": false
+              }
+            }
+          },
+          "special_opportunities": {
+            "type": "object",
+            "description": "Indicates whether the fund runs special situations like secondaries and SPVs.",
+            "fields": {
+              "secondaries": {
+                "type": "boolean",
+                "description": "True if the investor buys secondary shares.",
+                "example": true
+              },
+              "spvs": {
+                "type": "boolean",
+                "description": "True if the investor uses SPVs for specific deals.",
+                "example": true
+              },
+              "opportunistic_follow_ons": {
+                "type": "boolean",
+                "description": "True if they do opportunistic follow-on investments outside normal reserves.",
+                "example": true
+              }
+            }
+          }
+        }
+      },
+
+      "check_size_policy": {
+        "definition": "Overall check size strategy across stages, including follow-ons and reserves.",
+        "fields": {
+          "currency": {
+            "type": "string (ISO 4217 currency code)",
+            "description": "Default currency used for all check size amounts.",
+            "example": "USD"
+          },
+          "initial_check": {
+            "type": "object",
+            "description": "Minimum and maximum initial investment amounts.",
+            "fields": {
+              "min": {
+                "type": "number",
+                "description": "Minimum initial investment across all stages.",
+                "example": 250000
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum initial investment across all stages.",
+                "example": 20000000
+              }
+            }
+          },
+          "follow_on_capacity": {
+            "type": "object",
+            "description": "Range of capital reserved for follow-on checks per company.",
+            "fields": {
+              "min": {
+                "type": "number",
+                "description": "Minimum probable follow-on allocation.",
+                "example": 0
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum probable follow-on allocation.",
+                "example": 50000000
+              }
+            }
+          },
+          "reserve_strategy": {
+            "type": "object",
+            "description": "How much the investor reserves vs. initial checks.",
+            "fields": {
+              "reserves_multiple_of_initial": {
+                "type": "number",
+                "description": "Typical ratio of reserved follow-on capital to initial check.",
+                "example": 2.5
+              },
+              "comments": {
+                "type": "string",
+                "description": "Human-readable notes about reserve policy.",
+                "example": "Reserves heavily for breakout winners."
+              }
+            }
+          },
+          "flexibility_flags": {
+            "type": "object",
+            "description": "Indicates how flexible the investor is with their stated check sizes.",
+            "fields": {
+              "can_invest_below_min": {
+                "type": "boolean",
+                "description": "True if they will occasionally invest below typical minimum.",
+                "example": true
+              },
+              "can_invest_above_max": {
+                "type": "boolean",
+                "description": "True if they will occasionally invest above typical maximum.",
+                "example": true
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional commentary on flexibility.",
+                "example": "Can go outside band for exceptional opportunities."
+              }
+            }
+          }
+        }
+      },
+
+      "sector_and_thematic_focus": {
+        "definition": "Industry sectors and structured theses where the investor prefers to invest.",
+        "fields": {
+          "primary_sectors": {
+            "type": "array<object>",
+            "description": "Sectors that represent core focus areas.",
+            "item_fields": {
+              "name": {
+                "type": "string",
+                "description": "High-level sector name.",
+                "example": "B2B SaaS"
+              },
+              "sub_sectors": {
+                "type": "array<string>",
+                "description": "More detailed subsectors within this primary sector.",
+                "example": ["DevTools", "Security", "Data Infrastructure"]
+              },
+              "priority": {
+                "type": "string (enum)",
+                "description": "Relative priority for this sector.",
+                "enum": [
+                  "core",       // highest focus
+                  "strong",     // strong but not core
+                  "selective"   // opportunistic
+                ],
+                "example": "core"
+              }
+            }
+          },
+          "secondary_sectors": {
+            "type": "array<object>",
+            "description": "Sectors the investor considers but that are not core.",
+            "item_fields": { /* same as primary_sectors item_fields */ }
+          },
+          "excluded_sectors": {
+            "type": "array<string>",
+            "description": "Sectors the investor will not invest in.",
+            "example": ["Tobacco", "Weapons", "Gambling"]
+          },
+          "thematic_theses": {
+            "type": "array<object>",
+            "description": "Detailed, named theses used for more granular matching.",
+            "item_fields": {
+              "id": {
+                "type": "string",
+                "description": "Internal identifier for this thesis.",
+                "example": "thesis_ai_enterprise"
+              },
+              "name": {
+                "type": "string",
+                "description": "Short human-readable thesis name.",
+                "example": "AI-native enterprise software"
+              },
+              "description": {
+                "type": "string",
+                "description": "Detailed narrative of what this thesis covers.",
+                "example": "Invests in AI-first products that solve deep workflow problems."
+              },
+              "keywords": {
+                "type": "array<string>",
+                "description": "Keywords/tags for search and matching.",
+                "example": ["AI", "LLM", "automation", "enterprise"]
+              },
+              "stage_emphasis": {
+                "type": "string",
+                "description": "Free-form stage description that best matches this thesis (informational only).",
+                "example": "seed_to_series_a"
+              }
+            }
+          }
+        }
+      },
+
+      "business_model_focus": {
+        "definition": "Preferred business models, pricing models, and deal sizes (ACV).",
+        "fields": {
+          "preferred_models": {
+            "type": "array<string (enum)>",
+            "description": "Business models this investor prefers.",
+            "enum_values": [
+              "B2B_SaaS",
+              "B2C_SaaS",
+              "B2B2C",
+              "Marketplace",
+              "Two_sided_network",
+              "API_first",
+              "Developer_Tools",
+              "Fintech_infrastructure",
+              "Hardware_plus_software",
+              "Deeptech_license",
+              "Services_plus_SaaS",
+              "Consumer_subscriptions",
+              "Other"
+            ],
+            "example": ["B2B_SaaS", "API_first"]
+          },
+          "disfavored_models": {
+            "type": "array<string (enum)>",
+            "description": "Business models the investor actively avoids.",
+            "enum_values": [
+              "Pure_consulting",
+              "Hardware_only",
+              "Capex_heavy_industrial",
+              "Ad_supported_consumer",
+              "Gambling_related",
+              "Crypto_speculation",
+              "Other"
+            ],
+            "example": ["Hardware_only"]
+          },
+          "pricing_models": {
+            "type": "array<string (enum)>",
+            "description": "Monetization models the investor is comfortable with.",
+            "enum": [
+              "subscription",
+              "usage_based",
+              "tiered",
+              "seat_based",
+              "transaction_fee",
+              "take_rate",
+              "license_upfront",
+              "freemium",
+              "ads",
+              "mixed",
+              "other"
+            ],
+            "example": ["subscription", "usage_based", "freemium"]
+          },
+          "acv_preferences": {
+            "type": "object",
+            "description": "Typical annual contract value ranges the investor prefers.",
+            "fields": {
+              "min_acv_usd": {
+                "type": "number",
+                "description": "Minimum preferred ACV in USD.",
+                "example": 10000
+              },
+              "max_acv_usd": {
+                "type": "number",
+                "description": "Maximum typical ACV in USD the investor expects (above may be too enterprise).",
+                "example": 1000000
+              },
+              "notes": {
+                "type": "string",
+                "description": "Free-form explanation of ACV preferences.",
+                "example": "Prefers meaningful ACV but open to PLG with strong expansion."
+              }
+            }
+          },
+          "sales_motion_preferences": {
+            "type": "array<string (enum)>",
+            "description": "Types of go-to-market motions the investor understands and prefers.",
+            "enum": [
+              "PLG",
+              "Self_serve",
+              "Inside_sales",
+              "Field_sales",
+              "Enterprise_sales",
+              "Channel_sales",
+              "Hybrid_PLG_Sales",
+              "Bottom_up",
+              "Top_down",
+              "Marketplace_demand_side",
+              "Marketplace_supply_side",
+              "Other"
+            ],
+            "example": ["PLG", "Hybrid_PLG_Sales", "Enterprise_sales"]
+          }
+        }
+      },
+
+      "product_and_technology_focus": {
+        "definition": "Preferred technology categories, stacks, and defensibility mechanisms.",
+        "fields": {
+          "tech_stack_preferences": {
+            "type": "array<string>",
+            "description": "Preferred or familiar technology stack features.",
+            "example": ["Cloud_native", "Serverless", "Modern_data_stack"]
+          },
+          "deep_tech_flags": {
+            "type": "object",
+            "description": "Indicates whether the investor participates in deep tech and which areas.",
+            "fields": {
+              "invests_in_deep_tech": {
+                "type": "boolean",
+                "description": "True if the investor is comfortable with deep tech companies.",
+                "example": true
+              },
+              "areas": {
+                "type": "array<string (enum)>",
+                "description": "Deep-tech domains of interest.",
+                "enum": [
+                  "AI_ML",
+                  "Security",
+                  "Data_Infrastructure",
+                  "Robotics",
+                  "Hardtech",
+                  "Semiconductors",
+                  "Quantum",
+                  "Biotech",
+                  "Climate_tech",
+                  "Space",
+                  "Other"
+                ],
+                "example": ["AI_ML", "Security"]
+              }
+            }
+          },
+          "ip_and_defensibility": {
+            "type": "object",
+            "description": "What kinds of defensibility this investor values.",
+            "fields": {
+              "patents_required": {
+                "type": "boolean",
+                "description": "True if the investor heavily prefers or requires patents.",
+                "example": false
+              },
+              "prefers_strong_ip": {
+                "type": "boolean",
+                "description": "True if strong intellectual property is a major plus.",
+                "example": true
+              },
+              "network_effects_importance": {
+                "type": "string (enum)",
+                "description": "How important network effects are for this investor.",
+                "enum": ["low", "medium", "high"],
+                "example": "high"
+              },
+              "data_moats_importance": {
+                "type": "string (enum)",
+                "description": "How important proprietary data moats are.",
+                "enum": ["low", "medium", "high"],
+                "example": "high"
+              }
+            }
+          }
+        }
+      },
+
+      "traction_and_metrics_preferences": {
+        "definition": "Traction levels and metrics thresholds that the investor typically looks for.",
+        "fields": {
+          "pre_revenue": {
+            "type": "object",
+            "description": "Conditions for investing before significant revenue.",
+            "fields": {
+              "acceptable": {
+                "type": "boolean",
+                "description": "True if the investor is willing to invest pre-revenue.",
+                "example": true
+              },
+              "requirements": {
+                "type": "array<string>",
+                "description": "Required compensating signals for pre-revenue investments.",
+                "example": ["Strong team", "Compelling product vision", "Design partners"]
+              }
+            }
+          },
+          "early_revenue": {
+            "type": "object",
+            "description": "Revenue and KPIs expected at early stage (Seed/Series A).",
+            "fields": {
+              "min_arr_usd": {
+                "type": "number",
+                "description": "Minimum annual recurring revenue usually required.",
+                "example": 100000
+              },
+              "ideal_arr_range_usd": {
+                "type": "object",
+                "description": "Range of ARR considered ideal at initial investment.",
+                "fields": {
+                  "min": {
+                    "type": "number",
+                    "description": "Lower bound of ideal ARR.",
+                    "example": 500000
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "Upper bound of ideal ARR.",
+                    "example": 5000000
+                  }
+                }
+              },
+              "kpi_focus": {
+                "type": "array<string (enum)>",
+                "description": "Key metrics this investor uses to evaluate early-stage companies.",
+                "enum": [
+                  "Logo_growth",
+                  "Net_retention",
+                  "Gross_retention",
+                  "Sales_cycle_length",
+                  "Win_rate",
+                  "Gross_margins",
+                  "User_engagement",
+                  "Churn_rate",
+                  "Revenue_growth_rate",
+                  "Other"
+                ],
+                "example": ["Logo_growth", "Net_retention", "Gross_margins"]
+              }
+            }
+          },
+          "growth_stage": {
+            "type": "object",
+            "description": "Expected metrics for more mature companies.",
+            "fields": {
+              "min_arr_usd": {
+                "type": "number",
+                "description": "Minimum ARR for growth-stage investments.",
+                "example": 5000000
+              },
+              "kpi_focus": {
+                "type": "array<string (enum)>",
+                "description": "Key metrics for growth-stage evaluation.",
+                "enum": [
+                  "Year_over_year_growth",
+                  "CAC_payback_months",
+                  "LTV_to_CAC",
+                  "Burn_multiple",
+                  "EBITDA_margin",
+                  "Free_cash_flow",
+                  "Rule_of_40",
+                  "Other"
+                ],
+                "example": ["Year_over_year_growth", "Burn_multiple"]
+              }
+            }
+          },
+          "non_financial_signals": {
+            "type": "array<string (enum)>",
+            "description": "Non-monetary signals the investor values.",
+            "enum": [
+              "Waitlists",
+              "Engaged_community",
+              "High_NPS",
+              "Strong_design_partners",
+              "Strategic_partnerships",
+              "Open_source_adoption",
+              "Media_attention",
+              "Awards",
+              "Other"
+            ],
+            "example": ["Waitlists", "High_NPS", "Engaged_community"]
+          }
+        }
+      },
+
+      "team_and_founder_preferences": {
+        "definition": "Founder backgrounds, team composition, and diversity preferences.",
+        "fields": {
+          "founder_background": {
+            "type": "object",
+            "description": "Value the investor places on certain founder traits.",
+            "fields": {
+              "prior_founders": {
+                "type": "string (enum)",
+                "description": "Attitude towards previously founded companies.",
+                "enum": ["strong_positive", "positive", "neutral", "negative"],
+                "example": "strong_positive"
+              },
+              "ex_big_tech": {
+                "type": "string (enum)",
+                "description": "Attitude towards experience at big tech companies (FAANG, etc.).",
+                "enum": ["strong_positive", "positive", "neutral", "negative"],
+                "example": "positive"
+              },
+              "ex_unicorn": {
+                "type": "string (enum)",
+                "description": "Attitude towards experience at unicorn startups.",
+                "enum": ["strong_positive", "positive", "neutral", "negative"],
+                "example": "strong_positive"
+              },
+              "domain_experts": {
+                "type": "string (enum)",
+                "description": "Preference for deep domain expertise.",
+                "enum": ["strong_positive", "positive", "neutral", "negative"],
+                "example": "strong_positive"
+              }
+            }
+          },
+          "team_composition_preferences": {
+            "type": "object",
+            "description": "Preferred team structure at time of investment.",
+            "fields": {
+              "technical_cofounder_required": {
+                "type": "boolean",
+                "description": "True if at least one technical cofounder is required.",
+                "example": true
+              },
+              "minimum_full_time_founders": {
+                "type": "number",
+                "description": "Minimum number of full-time cofounders the investor likes to see.",
+                "example": 2
+              },
+              "location_preferences": {
+                "type": "array<string (enum)>",
+                "description": "Preferred team location models.",
+                "enum": [
+                  "Single_location",
+                  "Multi_office",
+                  "Remote_first",
+                  "Hybrid",
+                  "Tech_hubs_only",
+                  "Global",
+                  "Other"
+                ],
+                "example": ["Tech_hubs_only", "Remote_first"]
+              }
+            }
+          },
+          "diversity_and_inclusion": {
+            "type": "object",
+            "description": "Information about the investor’s diversity and inclusion commitments.",
+            "fields": {
+              "has_formal_d_and_i_thesis": {
+                "type": "boolean",
+                "description": "True if the firm has an explicit D&I investment thesis.",
+                "example": true
+              },
+              "public_commitments": {
+                "type": "array<string>",
+                "description": "Publicly stated diversity goals or programs.",
+                "example": ["Diversity_targets", "Inclusive_hiring_programs"]
+              }
+            }
+          }
+        }
+      },
+
+      "activity_and_timing": {
+        "definition": "How active the investor currently is and recent deal activity.",
+        "fields": {
+          "investment_pace": {
+            "type": "object",
+            "description": "Typical number of new deals per year.",
+            "fields": {
+              "deals_per_year_min": {
+                "type": "number",
+                "description": "Lower bound of new deals per year.",
+                "example": 8
+              },
+              "deals_per_year_max": {
+                "type": "number",
+                "description": "Upper bound of new deals per year.",
+                "example": 20
+              }
+            }
+          },
+          "current_fundraising_status": {
+            "type": "object",
+            "description": "Whether the investor is actively investing or between funds.",
+            "fields": {
+              "actively_investing": {
+                "type": "boolean",
+                "description": "True if they are currently deploying capital.",
+                "example": true
+              },
+              "fundraising_new_fund": {
+                "type": "boolean",
+                "description": "True if the investor is currently raising a new fund.",
+                "example": false
+              },
+              "slowdown_reason": {
+                "type": "string",
+                "description": "Optional note explaining any slowdown in pace.",
+                "example": ""
+              }
+            }
+          },
+          "last_investment_date": {
+            "type": "string (ISO 8601 date)",
+            "description": "Date of the last publicly known investment.",
+            "example": "2025-10-01"
+          },
+          "recent_relevant_deals": {
+            "type": "array<object>",
+            "description": "Recent deals relevant to a given startup (by sector/geo/stage).",
+            "item_fields": {
+              "company_name": {
+                "type": "string",
+                "description": "Name of portfolio company.",
+                "example": "Example AI Co"
+              },
+              "announced_round": {
+                "type": "string",
+                "description": "Round label.",
+                "example": "Seed"
+              },
+              "announced_amount_usd": {
+                "type": "number",
+                "description": "Publicly announced raise amount.",
+                "example": 4000000
+              },
+              "announcement_date": {
+                "type": "string (ISO 8601 date)",
+                "description": "Date of announcement.",
+                "example": "2025-09-15"
+              },
+              "sector": {
+                "type": "string",
+                "description": "High-level sector of the portfolio company.",
+                "example": "B2B SaaS"
+              },
+              "sub_sector": {
+                "type": "string",
+                "description": "More specific subsector.",
+                "example": "AI workflows"
+              },
+              "geo": {
+                "type": "string",
+                "description": "Geography of the portfolio company.",
+                "example": "US"
+              }
+            }
+          }
+        }
+      },
+
+      "decision_process": {
+        "definition": "How the investor makes decisions, timeframes, and governance expectations.",
+        "fields": {
+          "typical_timeline_days": {
+            "type": "object",
+            "description": "Approximate time from first meeting to term sheet.",
+            "fields": {
+              "min": {
+                "type": "number",
+                "description": "Fastest realistic decision time in days.",
+                "example": 21
+              },
+              "max": {
+                "type": "number",
+                "description": "Slowest realistic decision time in days.",
+                "example": 90
+              }
+            }
+          },
+          "process_steps": {
+            "type": "array<string>",
+            "description": "Ordered list of high-level steps in the investment process.",
+            "example": [
+              "Intro_call",
+              "Partner_meeting",
+              "Team_deep_dive",
+              "Customer_references",
+              "IC_vote",
+              "Term_sheet"
+            ]
+          },
+          "lead_or_follow": {
+            "type": "object",
+            "description": "Whether the investor prefers to lead, follow, or both.",
+            "fields": {
+              "can_lead": {
+                "type": "boolean",
+                "description": "True if they are able to lead rounds.",
+                "example": true
+              },
+              "prefers_to_lead": {
+                "type": "boolean",
+                "description": "True if they typically try to lead when they invest.",
+                "example": true
+              },
+              "can_follow": {
+                "type": "boolean",
+                "description": "True if they are willing to be a follower or co-investor.",
+                "example": true
+              }
+            }
+          },
+          "ownership_targets": {
+            "type": "object",
+            "description": "Preferred ownership ranges at entry.",
+            "fields": {
+              "min_pct": {
+                "type": "number",
+                "description": "Minimum acceptable ownership percentage.",
+                "example": 10
+              },
+              "target_pct": {
+                "type": "number",
+                "description": "Ideal ownership stake.",
+                "example": 15
+              },
+              "max_pct": {
+                "type": "number",
+                "description": "Maximum ownership they would typically hold.",
+                "example": 25
+              }
+            }
+          },
+          "board_seat_policy": {
+            "type": "object",
+            "description": "When the investor expects board or observer roles.",
+            "fields": {
+              "requires_board_seat_if_lead": {
+                "type": "boolean",
+                "description": "True if a board seat is usually required when leading.",
+                "example": true
+              },
+              "observer_rights_if_follow": {
+                "type": "boolean",
+                "description": "True if observer rights are usually requested when following.",
+                "example": true
+              }
+            }
+          }
+        }
+      },
+
+      "contact_and_relationships": {
+        "definition": "Contact details, intro preferences, and connection strength.",
+        "fields": {
+          "general_contact": {
+            "type": "object",
+            "description": "Generic inbound contact channels.",
+            "fields": {
+              "website": {
+                "type": "string (URL)",
+                "description": "Official fund website.",
+                "example": "https://www.sequoiacap.com"
+              },
+              "generic_email": {
+                "type": "string (email)",
+                "description": "General contact or dealflow email inbox.",
+                "example": "contact@sequoiacap.com"
+              },
+              "application_form_url": {
+                "type": "string (URL)",
+                "description": "Link to apply or submit a pitch (if available).",
+                "example": "https://www.sequoiacap.com/contact/"
+              },
+              "phone_number": {
+                "type": "string",
+                "description": "Public phone number if the firm lists one.",
+                "example": "+1-555-555-5555"
+              }
+            }
+          },
+          "email_format": {
+            "type": "object",
+            "description": "Canonical pattern for firm email addresses.",
+            "fields": {
+              "pattern": {
+                "type": "string",
+                "description": "Email pattern using tokens {first}, {last}, {first_initial}, {last_initial}.",
+                "example": "{first}@sequoiacap.com"
+              },
+              "examples": {
+                "type": "array<object>",
+                "description": "Concrete examples of emails to validate the pattern.",
+                "item_fields": {
+                  "name": {
+                    "type": "string",
+                    "description": "Full name of team member.",
+                    "example": "Jane Doe"
+                  },
+                  "email": {
+                    "type": "string (email)",
+                    "description": "Actual email address.",
+                    "example": "jane@sequoiacap.com"
+                  }
+                }
+              }
+            }
+          },
+          "social_links": {
+            "type": "object",
+            "description": "Official social media profiles for the firm.",
+            "fields": {
+              "linkedin": {
+                "type": "string (URL)",
+                "description": "Firm LinkedIn page URL.",
+                "example": "https://www.linkedin.com/company/sequoia-capital/"
+              },
+              "twitter": {
+                "type": "string (URL)",
+                "description": "Firm Twitter/X profile URL, if present.",
+                "example": "https://twitter.com/sequoia"
+              },
+              "blog": {
+                "type": "string (URL)",
+                "description": "Firm blog or insights content URL.",
+                "example": "https://www.sequoiacap.com/articles/"
+              }
+            }
+          },
+          "warm_intro_preferences": {
+            "type": "object",
+            "description": "Preferred warm introduction sources and cold outreach stance.",
+            "fields": {
+              "preferred_intro_sources": {
+                "type": "array<string (enum)>",
+                "description": "Types of people or entities the firm prefers intros from.",
+                "enum": [
+                  "Portfolio_founders",
+                  "Co_investors",
+                  "Trusted_operators",
+                  "Accelerator_partners",
+                  "Law_firms",
+                  "Bankers",
+                  "Other"
+                ],
+                "example": ["Portfolio_founders", "Co_investors"]
+              },
+              "cold_email_policy": {
+                "type": "object",
+                "description": "Openness and guidance regarding cold emails.",
+                "fields": {
+                  "accepts_cold_emails": {
+                    "type": "boolean",
+                    "description": "True if cold emails are welcomed or at least considered.",
+                    "example": true
+                  },
+                  "best_targets": {
+                    "type": "array<string>",
+                    "description": "Recommended roles or contacts for cold outreach.",
+                    "example": ["Sector_specialist_partners"]
+                  },
+                  "notes": {
+                    "type": "string",
+                    "description": "Additional guidance for effective cold outreach.",
+                    "example": "Cold emails are considered when highly tailored."
+                  }
+                }
+              }
+            }
+          },
+          "relationship_metadata": {
+            "type": "object",
+            "description": "User-specific metadata about the relationship to this investor.",
+            "fields": {
+              "connection_strength_score": {
+                "type": "number",
+                "description": "Heuristic score 0–1 representing closeness of relationship.",
+                "example": 0.7
+              },
+              "notes": {
+                "type": "string",
+                "description": "Free-form notes about relationship history.",
+                "example": "Met partner at conference; warm to AI workflows."
+              },
+              "existing_intros": {
+                "type": "array<object>",
+                "description": "Potential or completed warm intro paths.",
+                "item_fields": {
+                  "from_name": {
+                    "type": "string",
+                    "description": "Name of person who can provide an intro.",
+                    "example": "Alice Founder"
+                  },
+                  "from_org": {
+                    "type": "string",
+                    "description": "Organization of that person.",
+                    "example": "PortfolioCo"
+                  },
+                  "date": {
+                    "type": "string (ISO 8601 date)",
+                    "description": "Date when intro was offered or made.",
+                    "example": "2025-08-10"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "description": "Context about the intro.",
+                    "example": "Offered to intro for relevant AI infra deals."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "partners_and_team": {
+        "definition": "Individual partners and investment team members at the firm.",
+        "fields": {
+          "partners": {
+            "type": "array<object>",
+            "description": "General partners or partners with decision-making authority.",
+            "item_fields": {
+              "id": {
+                "type": "string",
+                "description": "Internal identifier for the partner.",
+                "example": "partner_001"
+              },
+              "name": {
+                "type": "string",
+                "description": "Full name of the partner.",
+                "example": "Jane Doe"
+              },
+              "title": {
+                "type": "string",
+                "description": "Official title (e.g., General Partner, Managing Partner).",
+                "example": "General Partner"
+              },
+              "role": {
+                "type": "string (enum)",
+                "description": "Functional role of the partner.",
+                "enum": [
+                  "lead_partner",
+                  "supporting_partner",
+                  "platform_partner",
+                  "operating_partner",
+                  "venture_partner",
+                  "other"
+                ],
+                "example": "lead_partner"
+              },
+              "email": {
+                "type": "string (email)",
+                "description": "Direct email address of the partner.",
+                "example": "jane@sequoiacap.com"
+              },
+              "linkedin_url": {
+                "type": "string (URL)",
+                "description": "Partner's LinkedIn profile URL.",
+                "example": "https://www.linkedin.com/in/janedoe/"
+              },
+              "twitter_url": {
+                "type": "string (URL)",
+                "description": "Partner's Twitter/X profile URL, if any.",
+                "example": "https://twitter.com/janedoe"
+              },
+              "location": {
+                "type": "object",
+                "description": "Primary working location of the partner.",
+                "fields": {
+                  "city": {
+                    "type": "string",
+                    "description": "City where the partner is primarily based.",
+                    "example": "San Francisco"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Country where the partner is primarily based.",
+                    "example": "United States"
+                  }
+                }
+              },
+              "personal_thesis": {
+                "type": "array<string>",
+                "description": "Topics, sectors, or theses this partner focuses on.",
+                "example": ["B2B SaaS", "Developer tools", "AI infrastructure"]
+              },
+              "check_size_ownership": {
+                "type": "object",
+                "description": "Typical check size this partner leads personally.",
+                "fields": {
+                  "typical_lead_check_min_usd": {
+                    "type": "number",
+                    "description": "Minimum typical lead check size.",
+                    "example": 2000000
+                  },
+                  "typical_lead_check_max_usd": {
+                    "type": "number",
+                    "description": "Maximum typical lead check size.",
+                    "example": 10000000
+                  }
+                }
+              },
+              "board_seat_preference": {
+                "type": "string (enum)",
+                "description": "Partner's preference for taking board seats.",
+                "enum": [
+                  "always",
+                  "often",
+                  "sometimes",
+                  "rarely",
+                  "never"
+                ],
+                "example": "often"
+              },
+              "portfolio_examples": {
+                "type": "array<string>",
+                "description": "Representative portfolio companies led by this partner.",
+                "example": ["DevToolCo", "DataInfraCo"]
+              },
+              "warm_introduction_routes": {
+                "type": "array<string>",
+                "description": "Best types of people for warm intros to this partner.",
+                "example": ["YC_founders", "Notable_engineering_leaders"]
+              }
+            }
+          },
+          "investment_team": {
+            "type": "array<object>",
+            "description": "Principals, associates, analysts, or platform roles relevant to sourcing.",
+            "item_fields": {
+              "name": {
+                "type": "string",
+                "description": "Full name of team member.",
+                "example": "John Smith"
+              },
+              "title": {
+                "type": "string",
+                "description": "Job title.",
+                "example": "Principal"
+              },
+              "focus": {
+                "type": "array<string>",
+                "description": "Sectors, stages, or themes this person covers.",
+                "example": ["Seed", "Series A", "AI", "DevTools"]
+              },
+              "email": {
+                "type": "string (email)",
+                "description": "Direct email for outreach.",
+                "example": "john@sequoiacap.com"
+              },
+              "linkedin_url": {
+                "type": "string (URL)",
+                "description": "LinkedIn profile of this team member.",
+                "example": "https://www.linkedin.com/in/johnsmith/"
+              }
+            }
+          }
+        }
+      },
+
+      "fit_scoring": {
+        "definition": "Machine-generated and qualitative fit between this investor and a specific startup.",
+        "fields": {
+          "overall_fit_score": {
+            "type": "number",
+            "description": "Single 0–1 score summarizing fit; higher is better.",
+            "example": 0.86
+          },
+          "fit_dimensions": {
+            "type": "object",
+            "description": "Dimension-specific fit scores for detailed analysis.",
+            "fields": {
+              "stage_fit_score": {
+                "type": "number",
+                "description": "Fit score for stage (pre-seed, seed, etc.).",
+                "example": 0.9
+              },
+              "check_size_fit_score": {
+                "type": "number",
+                "description": "Fit score for desired check size vs investor ranges.",
+                "example": 0.95
+              },
+              "sector_fit_score": {
+                "type": "number",
+                "description": "Fit score for sector/thematic alignment.",
+                "example": 0.9
+              },
+              "geo_fit_score": {
+                "type": "number",
+                "description": "Fit score for geography alignment.",
+                "example": 0.8
+              },
+              "business_model_fit_score": {
+                "type": "number",
+                "description": "Fit score for business model alignment.",
+                "example": 0.95
+              },
+              "traction_fit_score": {
+                "type": "number",
+                "description": "Fit score for traction vs investor expectations.",
+                "example": 0.75
+              },
+              "founder_background_fit_score": {
+                "type": "number",
+                "description": "Fit score for team traits vs preferences.",
+                "example": 0.88
+              }
+            }
+          },
+          "qualitative_fit_notes": {
+            "type": "string",
+            "description": "Narrative explanation of why this investor is a good or poor fit.",
+            "example": "Strong fit for US-based B2B SaaS seed/Series A with AI angle."
+          },
+          "red_flags": {
+            "type": "array<string>",
+            "description": "Non-fatal but concerning issues for this match, in code or free-text form.",
+            "example": ["No_prior_B2B_experience", "High_capex"]
+          },
+          "deal_blockers": {
+            "type": "array<string (enum)>",
+            "description": "Hard blockers that make an investment nearly impossible.",
+            "enum": [
+              "Conflicts_with_existing_portfolio",
+              "Insufficient_ownership_possible",
+              "Out_of_stage_scope",
+              "Out_of_geo_scope",
+              "Out_of_sector_thesis",
+              "Round_too_small",
+              "Round_too_large",
+              "Governance_constraints",
+              "Reputation_concerns",
+              "Compliance_or_sanctions_risk",
+              "Other"
+            ],
+            "example": ["Conflicts_with_existing_portfolio"]
+          }
+        }
+      },
+
+      "outreach_strategy_model": {
+        "definition": "System’s recommended outreach playbook for this investor.",
+        "fields": {
+          "priority_rank": {
+            "type": "number (integer)",
+            "description": "Relative priority of this investor among all candidates (1 = highest).",
+            "example": 1
+          },
+          "recommended_intro_path": {
+            "type": "string (enum)",
+            "description": "Recommended primary outreach channel.",
+            "enum": [
+              "warm_intro",
+              "cold_email",
+              "founder_community",
+              "accelerator_program",
+              "pitch_day",
+              "platform_application_form",
+              "other"
+            ],
+            "example": "warm_intro"
+          },
+          "ideal_intro_personas": {
+            "type": "array<string>",
+            "description": "Types of people best suited to introduce you to this investor.",
+            "example": ["Portfolio_founder_in_adjacent_space", "Senior_engineering_leader_known_to_partner"]
+          },
+          "suggested_angle": {
+            "type": "string",
+            "description": "Concise narrative angle that should resonate with this investor.",
+            "example": "AI-native workflow automation for enterprise teams; maps to Jane Doe's thesis on AI infra."
+          },
+          "email_subject_templates": {
+            "type": "array<string>",
+            "description": "Subject-line templates tailored to this investor.",
+            "example": [
+              "Seed round: AI-native [category] for [ICP] – intro via [mutual_contact]",
+              "[Mutual_contact] suggested I reach out – [company] x Sequoia"
+            ]
+          },
+          "follow_up_cadence_days": {
+            "type": "array<number>",
+            "description": "Recommended days after initial outreach for each follow-up touch.",
+            "example": [5, 10, 18]
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional tactical notes (e.g., when to send materials, how detailed to be).",
+            "example": "Emphasize traction, design partners, and technical depth of founding team."
+          }
+        }
+      },
+
+      "source_and_quality": {
+        "definition": "Provenance of this data and confidence levels.",
+        "fields": {
+          "data_sources": {
+            "type": "array<string (enum)>",
+            "description": "Sources from which data was obtained.",
+            "enum": [
+              "firm_website",
+              "press_release",
+              "crunchbase",
+              "pitchbook",
+              "linkedin",
+              "news_article",
+              "founder_report",
+              "internal_notes",
+              "other"
+            ],
+            "example": ["firm_website", "crunchbase", "linkedin"]
+          },
+          "last_verified_at": {
+            "type": "string (ISO 8601 datetime)",
+            "description": "Last time key data points for this profile were validated.",
+            "example": "2025-10-20T12:00:00Z"
+          },
+          "confidence_score": {
+            "type": "number",
+            "description": "0–1 heuristic confidence in accuracy and freshness of this profile.",
+            "example": 0.82
+          },
+          "missing_fields": {
+            "type": "array<string>",
+            "description": "List of important fields known to be missing or incomplete.",
+            "example": ["aum_usd_exact", "full_partners_list"]
+          }
+        }
+      },
+
+      "custom_tags": {
+        "definition": "Free-form tags used for filtering and classification of investors.",
+        "type": "array<string>",
+        "description": "Arbitrary tags describing the investor (tiering, special attributes, etc.).",
+        "example": ["tier_1", "b2b_saas_specialist", "ai_friendly", "us_focus", "can_lead_seed"]
+      }
+    }
+  }
+}
