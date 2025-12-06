@@ -311,7 +311,7 @@ const crawler = new CheerioCrawler({
             mode = detectedType;
         }
 
-        if (url.includes('linkedin.com') && (detectedType === 'linkedin-profile' || mode === 'linkedin-profile')) {
+        if (url.includes('linkedin.com')) {
             log.info('Scraping LinkedIn profile', { url });
             const extractedData = extractLinkedInData($, url, log, extractMAData);
             
