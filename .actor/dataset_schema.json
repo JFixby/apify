@@ -1,0 +1,242 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["entityType", "companyName", "businessName", "investorName", "url", "source", "dealReadiness"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "entityType": {
+                        "label": "Type",
+                        "format": "text"
+                    },
+                    "companyName": {
+                        "label": "Company Name",
+                        "format": "text"
+                    },
+                    "businessName": {
+                        "label": "Business Name",
+                        "format": "text"
+                    },
+                    "investorName": {
+                        "label": "Investor Name",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    },
+                    "source": {
+                        "label": "Source",
+                        "format": "text"
+                    },
+                    "dealReadiness": {
+                        "label": "Deal Readiness",
+                        "format": "text"
+                    }
+                }
+            }
+        },
+        "maDeals": {
+            "title": "M&A Deals - AnyBiz Ready",
+            "description": "Companies and businesses ready for M&A transactions",
+            "transformation": {
+                "fields": ["companyName", "businessName", "businessType", "location", "revenue", "valuation", "askingPrice", "dealReadiness", "matchingScore", "url"],
+                "desc": true
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "companyName": {
+                        "label": "Company Name",
+                        "format": "text"
+                    },
+                    "businessName": {
+                        "label": "Business Name",
+                        "format": "text"
+                    },
+                    "businessType": {
+                        "label": "Business Type",
+                        "format": "text"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "revenue": {
+                        "label": "Revenue",
+                        "format": "number"
+                    },
+                    "valuation": {
+                        "label": "Valuation",
+                        "format": "number"
+                    },
+                    "askingPrice": {
+                        "label": "Asking Price",
+                        "format": "number"
+                    },
+                    "dealReadiness": {
+                        "label": "Deal Readiness",
+                        "format": "text"
+                    },
+                    "matchingScore": {
+                        "label": "Matching Score",
+                        "format": "number"
+                    },
+                    "url": {
+                        "label": "Source URL",
+                        "format": "link"
+                    }
+                }
+            }
+        },
+        "investors": {
+            "title": "Investors & Buyers",
+            "description": "Investor profiles and potential buyers for matching",
+            "transformation": {
+                "fields": ["investorName", "title", "company", "location", "investmentFocus", "portfolioSize", "dealReadiness", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "investorName": {
+                        "label": "Investor Name",
+                        "format": "text"
+                    },
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "company": {
+                        "label": "Company/Firm",
+                        "format": "text"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "investmentFocus": {
+                        "label": "Investment Focus",
+                        "format": "text"
+                    },
+                    "portfolioSize": {
+                        "label": "Portfolio Size",
+                        "format": "text"
+                    },
+                    "dealReadiness": {
+                        "label": "Deal Readiness",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "Profile URL",
+                        "format": "link"
+                    }
+                }
+            }
+        },
+        "crunchbase": {
+            "title": "Crunchbase Companies",
+            "transformation": {
+                "fields": ["companyName", "website", "location", "industry", "founded", "employees", "totalFunding", "revenue", "dealReadiness", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "companyName": {
+                        "label": "Company Name",
+                        "format": "text"
+                    },
+                    "website": {
+                        "label": "Website",
+                        "format": "link"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "industry": {
+                        "label": "Industry",
+                        "format": "text"
+                    },
+                    "founded": {
+                        "label": "Founded",
+                        "format": "text"
+                    },
+                    "employees": {
+                        "label": "Employees",
+                        "format": "text"
+                    },
+                    "totalFunding": {
+                        "label": "Total Funding",
+                        "format": "text"
+                    },
+                    "revenue": {
+                        "label": "Revenue",
+                        "format": "number"
+                    },
+                    "dealReadiness": {
+                        "label": "Deal Readiness",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "Crunchbase URL",
+                        "format": "link"
+                    }
+                }
+            }
+        },
+        "businessListings": {
+            "title": "Business Listings",
+            "description": "Businesses for sale from marketplaces",
+            "transformation": {
+                "fields": ["businessName", "askingPrice", "revenue", "cashFlow", "location", "industry", "businessType", "employees", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "businessName": {
+                        "label": "Business Name",
+                        "format": "text"
+                    },
+                    "askingPrice": {
+                        "label": "Asking Price",
+                        "format": "number"
+                    },
+                    "revenue": {
+                        "label": "Revenue",
+                        "format": "number"
+                    },
+                    "cashFlow": {
+                        "label": "Cash Flow",
+                        "format": "number"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "industry": {
+                        "label": "Industry",
+                        "format": "text"
+                    },
+                    "businessType": {
+                        "label": "Business Type",
+                        "format": "text"
+                    },
+                    "employees": {
+                        "label": "Employees",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "Listing URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}
+

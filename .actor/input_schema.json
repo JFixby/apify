@@ -1,0 +1,44 @@
+{
+    "title": "Input schema of the my-actor",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "Crunchbase URLs only. Use company/organization URLs (https://www.crunchbase.com/organization/company-name) or investor/person URLs (https://www.crunchbase.com/person/investor-name). Non-Crunchbase URLs will be skipped.",
+            "editor": "requestListSources",
+            "prefill": [
+                {
+                    "url": "https://www.crunchbase.com/person/marc-andreessen"
+                }
+            ]
+        },
+        "scrapingMode": {
+            "title": "Scraping Mode",
+            "type": "string",
+            "description": "Select the type of data to extract. 'auto' detects automatically, 'crunchbase' for company data, 'investor' for investor profiles, 'business-listing' for M&A listings, 'general' for basic page data.",
+            "enum": ["auto", "crunchbase", "investor", "business-listing", "general"],
+            "default": "auto"
+        },
+        "extractMAData": {
+            "title": "Extract M&A Data",
+            "type": "boolean",
+            "description": "Enable enhanced M&A-specific data extraction (revenue, valuation, deal readiness, business type). Useful for AnyBiz workflow.",
+            "default": true
+        },
+        "discoverInvestors": {
+            "title": "Discover Investors",
+            "type": "boolean",
+            "description": "When enabled, crawls Crunchbase search results and listing pages to discover investor profiles automatically. Works with Crunchbase URLs that contain search results or investor listings.",
+            "default": false
+        },
+        "maxRequestsPerCrawl": {
+            "title": "Max Requests per Crawl",
+            "type": "integer",
+            "description": "Maximum number of requests that can be made by this crawler.",
+            "default": 100
+        }
+    }
+}
+

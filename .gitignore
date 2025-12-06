@@ -1,7 +1,7 @@
 .venv/
 .idea/
 
-.actor/
+
 node_modules/
 
 # Added by Apify CLI

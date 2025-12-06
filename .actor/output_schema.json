@@ -1,0 +1,32 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Output schema of the my-actor",
+    "properties": {
+        "overview": {
+            "type": "string",
+            "title": "Overview",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        },
+        "maDeals": {
+            "type": "string",
+            "title": "M&A Deals - AnyBiz Ready",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=maDeals"
+        },
+        "investors": {
+            "type": "string",
+            "title": "Investors & Buyers",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=investors"
+        },
+        "crunchbase": {
+            "type": "string",
+            "title": "Crunchbase Companies",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=crunchbase"
+        },
+        "businessListings": {
+            "type": "string",
+            "title": "Business Listings",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=businessListings"
+        }
+    }
+}
+

@@ -1,0 +1,19 @@
+{
+    "actorSpecification": 1,
+    "name": "my-actor",
+    "title": "my-actor",
+    "description": "my-actor",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "ai-generated-actor",
+        "generatedBy": "Auto"
+    },
+    "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}
+
