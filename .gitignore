@@ -5,10 +5,10 @@
 node_modules/
 
 # Added by Apify CLI
-node_modules
-.venv
-
+node_modules/
+.venv/
+storage/
 # Added by Apify CLI
 storage/
-
+storage/
 doc/
