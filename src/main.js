@@ -3,10 +3,21 @@ import { CheerioCrawler, Dataset } from 'crawlee';
 
 await Actor.init();
 
-const { 
+const input = (await Actor.getInput()) ?? {};
+let { 
     startUrls = [],
     maxRequestsPerCrawl = 100 
-} = (await Actor.getInput()) ?? {};
+} = input;
+
+if (startUrls.length === 0) {
+    Actor.log.warning('No startUrls provided in input!');
+}
+
+Actor.log.info(`Starting with ${startUrls.length} URLs`);
+if (startUrls.length > 0) {
+    const firstUrl = typeof startUrls[0] === 'string' ? startUrls[0] : startUrls[0].url;
+    Actor.log.info(`First URL: ${firstUrl}`);
+}
 
 const proxyConfiguration = await Actor.createProxyConfiguration({
     groups: ['RESIDENTIAL'],
@@ -31,7 +42,10 @@ const crawler = new CheerioCrawler({
     async requestHandler({ enqueueLinks, request, $, log }) {
         const url = request.loadedUrl;
         
+        log.info(`Processing: ${url}`);
+        
         if (!url.includes('linkedin.com')) {
+            log.warning(`Skipping non-LinkedIn URL: ${url}`);
             return;
         }
 
@@ -47,5 +61,6 @@ const crawler = new CheerioCrawler({
     },
 });
 
+Actor.log.info(`Running crawler with ${startUrls.length} start URLs`);
 await crawler.run(startUrls);
 await Actor.exit();
